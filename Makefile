@@ -185,3 +185,21 @@ container-clean:
 
 bin-clean:
 	rm -rf .go bin
+
+migrate-up:
+	migrate -database 'postgres://postgres:postgres@localhost:5432/yacop-api?sslmode=disable' -path cmd/yacop/migrations up
+
+migrate-down:
+	migrate -database 'postgres://postgres:postgres@localhost:5432/yacop-api?sslmode=disable' -path cmd/yacop/migrations down
+
+migrate-drop:
+	migrate -database 'postgres://postgres:postgres@localhost:5432/yacop-api?sslmode=disable' -path cmd/yacop/migrations drop
+
+test-migrate-up:
+	migrate -database 'postgres://postgres:postgres@localhost:5432/yacop-api-test?sslmode=disable' -path cmd/yacop/migrations up
+
+test-migrate-down:
+	migrate -database 'postgres://postgres:postgres@localhost:5432/yacop-api-test?sslmode=disable' -path cmd/yacop/migrations down
+
+test-migrate-drop:
+	migrate -database 'postgres://postgres:postgres@localhost:5432/yacop-api-test?sslmode=disable' -path cmd/yacop/migrations drop

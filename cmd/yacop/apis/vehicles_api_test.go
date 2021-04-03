@@ -6,22 +6,22 @@ import (
 	"testing"
 )
 
-func TestUsers(t *testing.T) {
-	path := test_data.GetTestCaseFolder()
+func TestVehicles(t *testing.T) {
+	path := test_data.GetTestCaseFolder() + "/vehicles"
 	var emptyHeaders []requestHeader
 	emptyBody := ""
 
 	runAPITests(t, []apiTestCase{
 		{
-			"get /dummy/hello-world",
+			"get /vehicles",
 			"GET",
-			"/dummy/hello-world",
-			"/dummy/hello-world",
+			"/vehicles",
+			"/vehicles",
 			emptyBody,
 			emptyHeaders,
-			SayHelloWorld,
+			Vehicles,
 			http.StatusOK,
-			path + "/dummy_hello-world.json",
+			path + "/all.json",
 		},
 	})
 }
