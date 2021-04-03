@@ -55,8 +55,6 @@ func newMockVehicleDAO() vehicleDAO {
 			{
 				ID:        uuid.New().String(),
 				FullName:  "test_vehicle",
-				CreatedAt: time.Now(),
-				UpdatedAt: time.Now(),
 			},
 		},
 	}
