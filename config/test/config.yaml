@@ -2,7 +2,7 @@ App:
   Name: yacop-api
 
 Server:
-  Port: 8082
+  Port: 1337
   Host: "localhost"
 
 Database:
