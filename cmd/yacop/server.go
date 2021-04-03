@@ -21,6 +21,7 @@ func main() {
 	// initialize base router and add routes to routes-group v1
 	r := gin.Default()
 	v1 := r.Group("/api")
+	routes.ManufacturersRoutesRegister(v1.Group("/manufacturers"))
 	routes.VehiclesRoutesRegister(v1.Group("/vehicles"))
 	if err := r.Run(fmt.Sprintf(":%v", config.Config.Server.Port)); err != nil {
 		fmt.Println(err)

@@ -12,14 +12,14 @@ import (
 	"net/http"
 )
 
-func VehicleCreate(c *gin.Context) {
-	v := validators.NewVehicleModelValidator()
+func ManufacturerCreate(c *gin.Context) {
+	v := validators.NewManufacturerModelValidator()
 	if err := v.Bind(c); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, common.NewValidatorError(err))
 		return
 	}
-	s := services.NewVehiclesService(daos.NewVehicleDAO())
-	if vehicle, err := s.Create(v.VehicleModel); err != nil {
+	s := services.NewManufacturersService(daos.NewManufacturerDAO())
+	if m, err := s.Create(v.ManufacturerModel); err != nil {
 		if err == gorm.ErrRecordNotFound {
 			c.AbortWithStatus(http.StatusNotFound)
 		} else {
@@ -27,42 +27,42 @@ func VehicleCreate(c *gin.Context) {
 		}
 		log.Error(err)
 	} else {
-		serializer := serializers.VehicleSerializer{C: c, VehicleModel: vehicle}
+		serializer := serializers.ManufacturerSerializer{C: c, ManufacturerModel: m}
 		c.JSON(http.StatusCreated, serializer.Response())
 	}
 }
 
-func Vehicles(c *gin.Context) {
-	s := services.NewVehiclesService(daos.NewVehicleDAO())
+func Manufacturers(c *gin.Context) {
+	s := services.NewManufacturersService(daos.NewManufacturerDAO())
 	if users, err := s.GetAll(); err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		log.Error(err)
 	} else {
-		var vehiclesResponse []serializers.VehicleResponse
-		for _, vehicle := range users {
-			serializer := serializers.VehicleSerializer{C: c, VehicleModel: vehicle}
-			vehiclesResponse = append(vehiclesResponse, serializer.Response())
+		var makesResponse []serializers.ManufacturerResponse
+		for _, m := range users {
+			serializer := serializers.ManufacturerSerializer{C: c, ManufacturerModel: m}
+			makesResponse = append(makesResponse, serializer.Response())
 		}
-		c.JSON(http.StatusOK, vehiclesResponse)
+		c.JSON(http.StatusOK, makesResponse)
 	}
 }
 
-func VehicleById(c *gin.Context) {
-	s := services.NewVehiclesService(daos.NewVehicleDAO())
+func ManufacturerById(c *gin.Context) {
+	s := services.NewManufacturersService(daos.NewManufacturerDAO())
 	id := c.Param("id")
-	if vehicle, err := s.GetById(id); err != nil {
+	if m, err := s.GetById(id); err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 		log.Error(err)
 	} else {
-		serializer := serializers.VehicleSerializer{C: c, VehicleModel: vehicle}
+		serializer := serializers.ManufacturerSerializer{C: c, ManufacturerModel: m}
 		c.JSON(http.StatusOK, serializer.Response())
 	}
 }
 
-func VehicleUpdate(c *gin.Context) {
-	s := services.NewVehiclesService(daos.NewVehicleDAO())
+func ManufacturerUpdate(c *gin.Context) {
+	s := services.NewManufacturersService(daos.NewManufacturerDAO())
 	id := c.Param("id")
-	if databaseVehicle, err := s.GetById(id); err != nil {
+	if databaseManufacturers, err := s.GetById(id); err != nil {
 		if err == gorm.ErrRecordNotFound {
 			c.AbortWithStatus(http.StatusNotFound)
 		} else {
@@ -70,32 +70,32 @@ func VehicleUpdate(c *gin.Context) {
 		}
 		log.Error(err)
 	} else {
-		v := validators.NewVehicleModelValidatorFillWith(*databaseVehicle)
+		v := validators.NewManufacturerModelValidatorFillWith(*databaseManufacturers)
 		if err := v.Bind(c); err != nil {
 			c.JSON(http.StatusUnprocessableEntity, err)
 			log.Error(err)
 			return
 		}
-		v.VehicleModel.ID = databaseVehicle.ID
-		if updatedVehicle, err := s.Update(v.VehicleModel); err != nil {
+		v.ManufacturerModel.ID = databaseManufacturers.ID
+		if updatedManufacturers, err := s.Update(v.ManufacturerModel); err != nil {
 			c.JSON(http.StatusUnprocessableEntity, err)
 			log.Error(err)
 			return
 		} else {
-			serializer := serializers.VehicleSerializer{C: c, VehicleModel: updatedVehicle}
+			serializer := serializers.ManufacturerSerializer{C: c, ManufacturerModel: updatedManufacturers}
 			c.JSON(http.StatusOK, serializer.Response())
 		}
 	}
 }
 
-func VehicleDelete(c *gin.Context) {
-	s := services.NewVehiclesService(daos.NewVehicleDAO())
+func ManufacturerDelete(c *gin.Context) {
+	s := services.NewManufacturersService(daos.NewManufacturerDAO())
 	id := c.Param("id")
-	if databaseVehicle, err := s.GetById(id); err != nil {
+	if databaseManufacturers, err := s.GetById(id); err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 		log.Error(err)
 	} else {
-		if err := s.Delete(*databaseVehicle); err != nil {
+		if err := s.Delete(*databaseManufacturers); err != nil {
 			c.AbortWithStatus(http.StatusInternalServerError)
 			log.Error(err)
 		} else {
