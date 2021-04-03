@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/fitchlol/yacop/cmd/yacop/config"
 	"github.com/stretchr/testify/assert"
-	"github.com/xtradesoft/nexxchange-user-service/cmd/whs-user/config"
 	"testing"
 )
 
