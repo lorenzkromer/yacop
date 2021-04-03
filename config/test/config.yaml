@@ -1,0 +1,15 @@
+App:
+  Name: yacop-api
+
+Server:
+  Port: 8082
+  Host: "localhost"
+
+Database:
+  User: "postgres"
+  Password: "postgres"
+  Host: "localhost"
+  Port: 5432
+  Name: "yacop-api-test"
+  SslMode: "disable"
+  MaxOpenConnections: 10
