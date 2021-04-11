@@ -1,11 +1,22 @@
+CREATE TYPE fuel_type_enum AS ENUM (
+    'PETROL'
+    ,'DIESEL'
+    ,'ELECTRICITY'
+    ,'NATURAL_GAS'
+    ,'HYBRID_PETROL'
+    ,'HYBRID_DIESEL'
+    ,'HYDROGEN'
+    );
+
 CREATE
     EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE vehicles
 (
     id              uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-    full_name       VARCHAR(255) NOT NULL,
-    manufacturer_id uuid         NOT NULL,
+    full_name       VARCHAR(255)   NOT NULL,
+    manufacturer_id uuid           NOT NULL,
+    fuel_type       fuel_type_enum NOT NULL,
     created_at      TIMESTAMPTZ      DEFAULT NULL,
     updated_at      TIMESTAMPTZ      DEFAULT NULL,
     deleted_at      TIMESTAMPTZ      DEFAULT NULL

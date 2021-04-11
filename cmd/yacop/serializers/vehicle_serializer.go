@@ -1,6 +1,7 @@
 package serializers
 
 import (
+	"github.com/fitchlol/yacop/cmd/yacop/enums"
 	"github.com/fitchlol/yacop/cmd/yacop/models"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -15,6 +16,7 @@ type VehicleSerializer struct {
 type VehicleResponse struct {
 	ID           string               `json:"id"`
 	FullName     string               `json:"full_name"`
+	FuelType     enums.FuelType       `json:"fuel_type"`
 	Manufacturer ManufacturerResponse `json:"manufacturer"`
 	CreatedAt    time.Time            `json:"created_at"`
 	UpdatedAt    time.Time            `json:"updated_at"`
@@ -26,6 +28,7 @@ func (s *VehicleSerializer) Response() VehicleResponse {
 	return VehicleResponse{
 		ID:           s.VehicleModel.ID,
 		FullName:     s.VehicleModel.FullName,
+		FuelType:     s.VehicleModel.FuelType,
 		Manufacturer: manufacturerSerializer.Response(),
 		CreatedAt:    s.VehicleModel.CreatedAt,
 		UpdatedAt:    s.VehicleModel.UpdatedAt,

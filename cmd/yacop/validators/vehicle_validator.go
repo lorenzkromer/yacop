@@ -2,14 +2,16 @@ package validators
 
 import (
 	"github.com/fitchlol/yacop/cmd/yacop/common"
+	"github.com/fitchlol/yacop/cmd/yacop/enums"
 	"github.com/fitchlol/yacop/cmd/yacop/models"
 	"github.com/gin-gonic/gin"
 )
 
 type VehicleModelValidator struct {
 	Vehicle struct {
-		FullName       string `json:"full_name" binding:"required,min=4,max=255"`
-		ManufacturerID string `json:"manufacturer_id" binding:"required,uuid"`
+		FullName       string         `json:"full_name" binding:"required,min=4,max=255"`
+		FuelType       enums.FuelType `json:"fuel_type" binding:"required,min=4,max=255"`
+		ManufacturerID string         `json:"manufacturer_id" binding:"required,uuid"`
 	}
 	VehicleModel models.Vehicle `json:"-"`
 }
@@ -20,6 +22,7 @@ func (s *VehicleModelValidator) Bind(c *gin.Context) error {
 		return err
 	}
 	s.VehicleModel.FullName = s.Vehicle.FullName
+	s.VehicleModel.FuelType = s.Vehicle.FuelType
 	s.VehicleModel.ManufacturerID = s.Vehicle.ManufacturerID
 	return nil
 }
@@ -33,6 +36,7 @@ func NewVehicleModelValidator() VehicleModelValidator {
 func NewVehicleModelValidatorFillWith(model models.Vehicle) VehicleModelValidator {
 	validator := NewVehicleModelValidator()
 	validator.Vehicle.FullName = model.FullName
+	validator.Vehicle.FuelType = model.FuelType
 	validator.Vehicle.ManufacturerID = model.ManufacturerID
 	return validator
 }
