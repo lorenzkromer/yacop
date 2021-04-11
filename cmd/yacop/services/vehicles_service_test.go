@@ -53,8 +53,8 @@ func newMockVehicleDAO() vehicleDAO {
 	return &mockVehicleDAO{
 		records: []models.Vehicle{
 			{
-				ID:        uuid.New().String(),
-				FullName:  "test_vehicle",
+				ID:       uuid.New().String(),
+				FullName: "test_vehicle",
 			},
 		},
 	}

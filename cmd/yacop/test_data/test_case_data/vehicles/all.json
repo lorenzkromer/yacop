@@ -2,6 +2,7 @@
   {
     "created_at": "0001-01-01T00:00:00Z",
     "deleted_at": null,
+    "fuel_type": "PETROL",
     "full_name": "Fast Test Car",
     "id": "00000000-0000-0000-0000-000000000001",
     "manufacturer": {

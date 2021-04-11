@@ -6,5 +6,5 @@ truncate table manufacturers cascade;
 INSERT INTO manufacturers (id, name)
 VALUES ('00000000-0000-0000-0000-000000000010', 'Audi');
 
-INSERT INTO vehicles (id, full_name, manufacturer_id)
-VALUES ('00000000-0000-0000-0000-000000000001', 'Fast Test Car', '00000000-0000-0000-0000-000000000010');
+INSERT INTO vehicles (id, full_name, manufacturer_id, fuel_type)
+VALUES ('00000000-0000-0000-0000-000000000001', 'Fast Test Car', '00000000-0000-0000-0000-000000000010', 'PETROL');

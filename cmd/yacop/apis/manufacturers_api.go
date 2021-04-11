@@ -103,4 +103,3 @@ func ManufacturerDelete(c *gin.Context) {
 		}
 	}
 }
-

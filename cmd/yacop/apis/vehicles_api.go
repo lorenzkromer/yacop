@@ -103,4 +103,3 @@ func VehicleDelete(c *gin.Context) {
 		}
 	}
 }
-

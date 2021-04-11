@@ -8,7 +8,7 @@ import (
 )
 
 type ManufacturerSerializer struct {
-	C         *gin.Context
+	C                 *gin.Context
 	ManufacturerModel *models.Manufacturer
 }
 
