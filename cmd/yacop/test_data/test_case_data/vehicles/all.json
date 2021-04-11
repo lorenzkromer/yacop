@@ -2,8 +2,8 @@
   {
     "created_at": "0001-01-01T00:00:00Z",
     "deleted_at": null,
-    "fuel_type": "PETROL",
-    "full_name": "Fast Test Car",
+    "fuel_type": "DIESEL",
+    "full_name": "A6 2.0 TDI",
     "id": "00000000-0000-0000-0000-000000000001",
     "manufacturer": {
       "created_at": "0001-01-01T00:00:00Z",
@@ -12,6 +12,9 @@
       "name": "Audi",
       "updated_at": "0001-01-01T00:00:00Z"
     },
-    "updated_at": "0001-01-01T00:00:00Z"
+    "maximum_fuel_type": 228,
+    "maximum_kilowatts": 130,
+    "updated_at": "0001-01-01T00:00:00Z",
+    "weight_in_kilograms": 1650
   }
 ]
