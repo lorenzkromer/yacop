@@ -11,7 +11,7 @@ type VehicleModelValidator struct {
 	Vehicle struct {
 		FullName                 string         `json:"full_name" binding:"required,min=4,max=255"`
 		FuelType                 enums.FuelType `json:"fuel_type" binding:"required,min=4,max=255"`
-		MaximumKilometersPerHour int            `json:"maximum_fuel_type" binding:"required,gt=0"`
+		MaximumKilometersPerHour int            `json:"maximum_kilometers_per_hour" binding:"required,gt=0"`
 		MaximumKilowatts         int            `json:"maximum_kilowatts" binding:"required,gt=0"`
 		WeightInKilograms        int            `json:"weight_in_kilograms" binding:"required,gt=0"`
 		ManufacturerID           string         `json:"manufacturer_id" binding:"required,uuid"`

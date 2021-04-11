@@ -8,7 +8,7 @@ import (
 
 type ManufacturerModelValidator struct {
 	Manufacturer struct {
-		Name string `json:"name" binding:"required,min=4,max=255"`
+		Name string `json:"name" binding:"required,min=1,max=255"`
 	}
 	ManufacturerModel models.Manufacturer `json:"-"`
 }

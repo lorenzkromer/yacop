@@ -3,7 +3,6 @@ package models
 import (
 	"github.com/fitchlol/yacop/cmd/yacop/enums"
 	"gorm.io/gorm"
-	"time"
 )
 
 // Vehicle Model
@@ -15,8 +14,6 @@ type Vehicle struct {
 	MaximumKilometersPerHour int            `gorm:"column:maximum_kilometers_per_hour;type:int" json:"maximum_fuel_type"`
 	MaximumKilowatts         int            `gorm:"column:maximum_kilowatts;type:int" json:"maximum_kilowatts"`
 	WeightInKilograms        int            `gorm:"column:weight_in_kilograms;type:int" json:"weight_in_kilograms"`
-	ConstructionStart        time.Time
-	ConstructionEnd          time.Time
 	ManufacturerID           string `gorm:"column:manufacturer_id" json:"-"`
 	Manufacturer             Manufacturer
 }
