@@ -1,0 +1,56 @@
+{
+  "name": "Toyota Corolla 1.4 16v VVT-i",
+  "body_type": "Hatchback",
+  "doors": 5,
+  "seats": 5,
+  "transmission": "AUTOMATIC",
+  "gears": "5",
+  "introduction": "2002-06",
+  "end": "2004-06",
+  "drive_wheel": "FRONT",
+  "engine_type": "FUEL_ENGINE",
+  "fuel_type": "PETROL",
+  "power_horsepower": 97,
+  "power_kilo_watt": 71,
+  "torque": 130,
+  "engine": {
+    "name": "unknown",
+    "description": "unknown",
+    "manufacturer": {},
+    "cylinders": 4,
+    "engine_capacity": 1398,
+    "compression_ratio": "10.5 : 1",
+    "power_horsepower": 97,
+    "power_kilo_watt": 71,
+    "torque": 130,
+    "turbo_charged": false,
+    "catalyst": "regular",
+    "fuel_system": "multipoint injection",
+    "valve_actuation": "dohc"
+  },
+  "chassis": {
+    "front_suspension": "independent, mcpherson",
+    "rear_suspension": "multilink",
+    "front_suspension": "coil springs",
+    "read_suspension": "coil springs",
+    "front_stabilizer": true,
+    "rear_stabilizer": true,
+    "front_tire_size": "",
+    "rear_tire_size": ""
+  },
+  "performance": {
+    "top_speed_kmh": 185,
+    "acceleration_kmh": {
+      "0_to_100_in_seconds": 12
+    },
+    "turning_circle_meters": 10.2
+  },
+  "consumption": {
+    "urban_consumption": "",
+    "extra_urban_consumption": "",
+    "combined_consumption": "",
+    "co2_emissions": "",
+    "energy_label": "",
+    "range": 12345
+  }
+}
