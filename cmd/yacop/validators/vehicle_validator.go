@@ -15,6 +15,7 @@ type VehicleModelValidator struct {
 		MaximumKilowatts         int            `json:"maximum_kilowatts" binding:"required,gt=0"`
 		WeightInKilograms        int            `json:"weight_in_kilograms" binding:"required,gt=0"`
 		ManufacturerID           string         `json:"manufacturer_id" binding:"required,uuid"`
+		GarageID                 string         `json:"garage_id" binding:"required,uuid"`
 	}
 	VehicleModel models.Vehicle `json:"-"`
 }
@@ -30,6 +31,7 @@ func (s *VehicleModelValidator) Bind(c *gin.Context) error {
 	s.VehicleModel.MaximumKilometersPerHour = s.Vehicle.MaximumKilometersPerHour
 	s.VehicleModel.WeightInKilograms = s.Vehicle.WeightInKilograms
 	s.VehicleModel.ManufacturerID = s.Vehicle.ManufacturerID
+	s.VehicleModel.GarageID = s.Vehicle.GarageID
 	return nil
 }
 
@@ -47,5 +49,6 @@ func NewVehicleModelValidatorFillWith(model models.Vehicle) VehicleModelValidato
 	validator.Vehicle.MaximumKilometersPerHour = model.MaximumKilometersPerHour
 	validator.Vehicle.WeightInKilograms = model.WeightInKilograms
 	validator.Vehicle.ManufacturerID = model.ManufacturerID
+	validator.Vehicle.GarageID = model.GarageID
 	return validator
 }

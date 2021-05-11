@@ -3,6 +3,7 @@ package apis
 import (
 	"github.com/fitchlol/yacop/cmd/yacop/common"
 	"github.com/fitchlol/yacop/cmd/yacop/daos"
+	middlewares "github.com/fitchlol/yacop/cmd/yacop/middleware"
 	"github.com/fitchlol/yacop/cmd/yacop/serializers"
 	"github.com/fitchlol/yacop/cmd/yacop/services"
 	"github.com/fitchlol/yacop/cmd/yacop/validators"
@@ -34,7 +35,8 @@ func VehicleCreate(c *gin.Context) {
 
 func Vehicles(c *gin.Context) {
 	s := services.NewVehiclesService(daos.NewVehicleDAO())
-	if users, err := s.GetAll(); err != nil {
+	user := middlewares.GetUserContext(c)
+	if users, err := s.GetByGarage(user.ID); err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		log.Error(err)
 	} else {

@@ -1,21 +1,21 @@
 CREATE TYPE fuel_type_enum AS ENUM (
-    'PETROL'
-    ,'DIESEL'
-    ,'ELECTRICITY'
-    ,'NATURAL_GAS'
-    ,'HYBRID_PETROL'
-    ,'HYBRID_DIESEL'
-    ,'HYDROGEN'
+    'PETROL',
+    'DIESEL',
+    'ELECTRICITY',
+    'NATURAL_GAS',
+    'HYBRID_PETROL',
+    'HYBRID_DIESEL',
+    'HYDROGEN'
     );
-
-CREATE
-    EXTENSION IF NOT EXISTS "uuid-ossp";
-
+--
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+--
 CREATE TABLE vehicles
 (
     id                          uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     full_name                   VARCHAR(255)   NOT NULL,
     manufacturer_id             uuid           NOT NULL,
+    garage_id                   uuid           NOT NULL,
     fuel_type                   fuel_type_enum NOT NULL,
     maximum_kilometers_per_hour INTEGER        NOT NULL,
     maximum_kilowatts           INTEGER        NOT NULL,
@@ -24,9 +24,9 @@ CREATE TABLE vehicles
     updated_at                  TIMESTAMPTZ      DEFAULT NULL,
     deleted_at                  TIMESTAMPTZ      DEFAULT NULL
 );
-
-CREATE UNIQUE INDEX ux_vehicles_full_name ON vehicles (full_name) WHERE deleted_at IS NULL;
-
+--CREATE UNIQUE INDEX ux_vehicles_full_name ON vehicles (full_name)
+--WHERE deleted_at IS NULL;
+--
 CREATE TABLE manufacturers
 (
     id         uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -35,10 +35,21 @@ CREATE TABLE manufacturers
     updated_at TIMESTAMPTZ      DEFAULT NULL,
     deleted_at TIMESTAMPTZ      DEFAULT NULL
 );
-
-CREATE UNIQUE INDEX ux_manufacturers_name ON manufacturers (name) WHERE deleted_at IS NULL;
-
+CREATE UNIQUE INDEX ux_manufacturers_name ON manufacturers (name)
+    WHERE deleted_at IS NULL;
+--
+CREATE TABLE garages
+(
+    id         uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id    uuid NOT NULL,
+    created_at TIMESTAMPTZ      DEFAULT NULL,
+    updated_at TIMESTAMPTZ      DEFAULT NULL,
+    deleted_at TIMESTAMPTZ      DEFAULT NULL
+);
+CREATE UNIQUE INDEX ux_owners_user_id ON garages (user_id)
+    WHERE deleted_at IS NULL;
+--
 ALTER TABLE vehicles
-    ADD CONSTRAINT fk_vehicles_manufacturer_id
-        FOREIGN KEY (manufacturer_id)
-            REFERENCES manufacturers (id);
+    ADD CONSTRAINT fk_vehicles_manufacturer_id FOREIGN KEY (manufacturer_id) REFERENCES manufacturers (id);
+ALTER TABLE vehicles
+    ADD CONSTRAINT fk_vehicles_garage_id FOREIGN KEY (garage_id) REFERENCES garages (id);

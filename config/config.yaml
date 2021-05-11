@@ -7,9 +7,17 @@ Server:
 
 Database:
   User: "postgres"
-  Password: "postgres"
-  Host: "localhost"
+  Password: "thisiselkromerdev"
+  Host: "elkromer.dev"
   Port: 5432
-  Name: "yacop-api"
+  Name: "yacop_dev"
   SslMode: "disable"
   MaxOpenConnections: 10
+
+Keycloak:
+  ClientID: "yacop-api"
+  JWKS:
+    # source url of jwks
+    Url: "https://iam.elkromer.dev/auth/realms/yacop/protocol/openid-connect/certs"
+    # refresh jwks in n-hour interval
+    RefreshInterval: 1

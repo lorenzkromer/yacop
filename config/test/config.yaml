@@ -7,9 +7,9 @@ Server:
 
 Database:
   User: "postgres"
-  Password: "postgres"
-  Host: "localhost"
+  Password: "thisiselkromerdev"
+  Host: "elkromer.dev"
   Port: 5432
-  Name: "yacop-api-test"
+  Name: "yacop_dev"
   SslMode: "disable"
   MaxOpenConnections: 10

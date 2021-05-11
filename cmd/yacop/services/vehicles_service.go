@@ -6,7 +6,7 @@ import (
 
 type vehicleDAO interface {
 	Create(vehicle models.Vehicle) (*models.Vehicle, error)
-	GetAll() ([]*models.Vehicle, error)
+	GetByGarage(userId string) ([]*models.Vehicle, error)
 	GetById(id string) (*models.Vehicle, error)
 	Update(vehicle models.Vehicle) (*models.Vehicle, error)
 	Delete(vehicle models.Vehicle) error
@@ -24,8 +24,8 @@ func (s *VehiclesService) Create(vehicle models.Vehicle) (*models.Vehicle, error
 	return s.dVehicle.Create(vehicle)
 }
 
-func (s *VehiclesService) GetAll() ([]*models.Vehicle, error) {
-	return s.dVehicle.GetAll()
+func (s *VehiclesService) GetByGarage(userId string) ([]*models.Vehicle, error) {
+	return s.dVehicle.GetByGarage(userId)
 }
 
 func (s *VehiclesService) GetById(id string) (*models.Vehicle, error) {

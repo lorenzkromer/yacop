@@ -20,10 +20,11 @@ func (dao *VehicleDAO) Create(vehicle models.Vehicle) (*models.Vehicle, error) {
 	return &vehicle, err
 }
 
-func (dao *VehicleDAO) GetAll() ([]*models.Vehicle, error) {
+func (dao *VehicleDAO) GetByGarage(userId string) ([]*models.Vehicle, error) {
 	var vehicles []*models.Vehicle
 
 	err := config.Config.DB.Preload(clause.Associations).
+		Where("user_id", userId).
 		Find(&vehicles).
 		Error
 

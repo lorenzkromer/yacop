@@ -5,6 +5,7 @@
     "maximum_kilowatts": 140,
     "maximum_kilometers_per_hour": 200,
     "weight_in_kilograms": 2000,
-    "manufacturer_id": "00000000-0000-0000-0000-000000000010"
+    "manufacturer_id": "00000000-0000-0000-0000-000000000010",
+    "garage_id": "00000000-0000-0101-0000-000000000010"
   }
 }

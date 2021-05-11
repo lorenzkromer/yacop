@@ -32,7 +32,7 @@ func TestVehiclesService_Basic_CRUD(t *testing.T) {
 		assert.Equal(t, "crud_test_vehicle", vehicleById.FullName)
 	}
 
-	vehicles, err := s.GetAll()
+	vehicles, err := s.GetByGarage()
 	if assert.Nil(t, err) && assert.NotNil(t, vehicles) {
 		assert.Len(t, vehicles, 2)
 	}
@@ -72,7 +72,7 @@ func (m *mockVehicleDAO) Create(vehicle models.Vehicle) (*models.Vehicle, error)
 	return &vehicle, nil
 }
 
-func (m *mockVehicleDAO) GetAll() ([]*models.Vehicle, error) {
+func (m *mockVehicleDAO) GetAllByUserID() ([]*models.Vehicle, error) {
 	var recordsFound []*models.Vehicle
 	for _, record := range m.records {
 		recordsFound = append(recordsFound, &record)

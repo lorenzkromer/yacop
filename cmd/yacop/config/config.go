@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"github.com/MicahParks/keyfunc"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
@@ -36,6 +37,15 @@ type appConfig struct {
 		Name               string
 		SslMode            string
 		MaxOpenConnections int
+	}
+
+	Keycloak struct {
+		ClientID string
+		JWKS     struct {
+			KeySet          *keyfunc.JWKS
+			Url             string
+			RefreshInterval int
+		}
 	}
 }
 
