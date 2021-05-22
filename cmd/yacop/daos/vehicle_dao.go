@@ -1,6 +1,7 @@
 package daos
 
 import (
+	"fmt"
 	"github.com/fitchlol/yacop/cmd/yacop/config"
 	"github.com/fitchlol/yacop/cmd/yacop/models"
 	"gorm.io/gorm/clause"
@@ -20,21 +21,24 @@ func (dao *VehicleDAO) Create(vehicle models.Vehicle) (*models.Vehicle, error) {
 	return &vehicle, err
 }
 
-func (dao *VehicleDAO) GetByGarage(userId string) ([]*models.Vehicle, error) {
+func (dao *VehicleDAO) GetByGarage(garageId string) ([]*models.Vehicle, error) {
+	ctx := config.Config.DB.Statement.Context
+	fmt.Println(ctx)
 	var vehicles []*models.Vehicle
 
 	err := config.Config.DB.Preload(clause.Associations).
-		Where("user_id", userId).
+		Where("garage_id", garageId).
 		Find(&vehicles).
 		Error
 
 	return vehicles, err
 }
 
-func (dao *VehicleDAO) GetById(id string) (*models.Vehicle, error) {
+func (dao *VehicleDAO) GetByGarageAndId(garageId string, id string) (*models.Vehicle, error) {
 	var vehicle models.Vehicle
 
 	err := config.Config.DB.Where("id = ?", id).
+		Where("garage_id = ?", garageId).
 		First(&vehicle).
 		Error
 

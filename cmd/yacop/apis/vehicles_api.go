@@ -36,12 +36,12 @@ func VehicleCreate(c *gin.Context) {
 func Vehicles(c *gin.Context) {
 	s := services.NewVehiclesService(daos.NewVehicleDAO())
 	user := middlewares.GetUserContext(c)
-	if users, err := s.GetByGarage(user.ID); err != nil {
+	if vehicles, err := s.GetByGarage(user.Garage.ID); err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		log.Error(err)
 	} else {
 		var vehiclesResponse []serializers.VehicleResponse
-		for _, vehicle := range users {
+		for _, vehicle := range vehicles {
 			serializer := serializers.VehicleSerializer{C: c, VehicleModel: vehicle}
 			vehiclesResponse = append(vehiclesResponse, serializer.Response())
 		}
@@ -52,7 +52,8 @@ func Vehicles(c *gin.Context) {
 func VehicleById(c *gin.Context) {
 	s := services.NewVehiclesService(daos.NewVehicleDAO())
 	id := c.Param("id")
-	if vehicle, err := s.GetById(id); err != nil {
+	user := middlewares.GetUserContext(c)
+	if vehicle, err := s.GetByGarageAndId(*user.Garage, id); err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 		log.Error(err)
 	} else {
@@ -64,7 +65,8 @@ func VehicleById(c *gin.Context) {
 func VehicleUpdate(c *gin.Context) {
 	s := services.NewVehiclesService(daos.NewVehicleDAO())
 	id := c.Param("id")
-	if databaseVehicle, err := s.GetById(id); err != nil {
+	user := middlewares.GetUserContext(c)
+	if databaseVehicle, err := s.GetByGarageAndId(*user.Garage, id); err != nil {
 		if err == gorm.ErrRecordNotFound {
 			c.AbortWithStatus(http.StatusNotFound)
 		} else {
@@ -93,7 +95,8 @@ func VehicleUpdate(c *gin.Context) {
 func VehicleDelete(c *gin.Context) {
 	s := services.NewVehiclesService(daos.NewVehicleDAO())
 	id := c.Param("id")
-	if databaseVehicle, err := s.GetById(id); err != nil {
+	user := middlewares.GetUserContext(c)
+	if databaseVehicle, err := s.GetByGarageAndId(*user.Garage, id); err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 		log.Error(err)
 	} else {

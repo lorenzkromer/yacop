@@ -32,7 +32,7 @@ func TestVehiclesService_Basic_CRUD(t *testing.T) {
 		assert.Equal(t, "crud_test_vehicle", vehicleById.FullName)
 	}
 
-	vehicles, err := s.GetByGarage()
+	vehicles, err := s.GetByGarage(userID)
 	if assert.Nil(t, err) && assert.NotNil(t, vehicles) {
 		assert.Len(t, vehicles, 2)
 	}
@@ -62,6 +62,10 @@ func newMockVehicleDAO() vehicleDAO {
 
 type mockVehicleDAO struct {
 	records []models.Vehicle
+}
+
+func (m *mockVehicleDAO) GetByGarage(userId string) ([]*models.Vehicle, error) {
+	panic("implement me")
 }
 
 func (m *mockVehicleDAO) Create(vehicle models.Vehicle) (*models.Vehicle, error) {

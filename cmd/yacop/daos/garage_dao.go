@@ -3,6 +3,7 @@ package daos
 import (
 	"github.com/fitchlol/yacop/cmd/yacop/config"
 	"github.com/fitchlol/yacop/cmd/yacop/models"
+	"gorm.io/gorm/clause"
 )
 
 // GarageDAO persists Garage data in database
@@ -22,7 +23,8 @@ func (dao *GarageDAO) Create(garage models.Garage) (*models.Garage, error) {
 func (dao *GarageDAO) GetByUserId(userId string) (*models.Garage, error) {
 	var garage models.Garage
 
-	err := config.Config.DB.Where("user_id = ?", userId).
+	err := config.Config.DB.Preload(clause.Associations).
+		Where("user_id = ?", userId).
 		First(&garage).
 		Error
 

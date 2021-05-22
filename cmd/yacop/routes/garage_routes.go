@@ -7,8 +7,7 @@ import (
 
 func GarageRoutesRegister(router *gin.RouterGroup) {
 	router.GET("", apis.GarageByUser)
-	router.GET("/init", apis.GarageInit)
-
+	// router.GET("/init", apis.GarageInit)
 
 	router.POST("/vehicles", apis.VehicleCreate)
 	router.GET("/vehicles", apis.Vehicles)

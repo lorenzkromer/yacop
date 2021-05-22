@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+var userID = uuid.NewString()
+
 func TestNewGarageService(t *testing.T) {
 	dao := newMockGarageDAO()
 	s := NewGarageService(dao)
@@ -49,7 +51,7 @@ func newMockGarageDAO() garageDao {
 		records: []models.Garage{
 			{
 				ID:     uuid.New().String(),
-				UserID: uuid.NewString(),
+				UserID: userID,
 			},
 		},
 	}

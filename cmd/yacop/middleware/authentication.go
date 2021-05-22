@@ -5,8 +5,12 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"github.com/fitchlol/yacop/cmd/yacop/config"
+	"github.com/fitchlol/yacop/cmd/yacop/daos"
+	"github.com/fitchlol/yacop/cmd/yacop/models"
+	"github.com/fitchlol/yacop/cmd/yacop/services"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 	"net/http"
 	"strings"
 )
@@ -34,7 +38,8 @@ var AuthorizationHeaderExtractor = &request.PostExtractionFilter{
 }
 
 type UserContext struct {
-	ID string
+	ID     string
+	Garage *models.Garage
 }
 
 type CustomClaims struct {
@@ -42,9 +47,10 @@ type CustomClaims struct {
 }
 
 // A helper to write user_id and user_model to the context
-func updateUserContext(c *gin.Context, userId string) {
+func updateUserContext(c *gin.Context, userId string, garage *models.Garage) {
 	c.Request = c.Request.WithContext(context.WithValue(c.Request.Context(), userContextKey, UserContext{
-		ID: userId,
+		ID:     userId,
+		Garage: garage,
 	}))
 }
 
@@ -55,7 +61,7 @@ func GetUserContext(c *gin.Context) *UserContext {
 
 func AuthenticationMiddleware(auto401 bool) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		updateUserContext(c, "")
+		updateUserContext(c, "", nil)
 
 		token, err := request.ParseFromRequest(
 			c.Request,
@@ -72,6 +78,23 @@ func AuthenticationMiddleware(auto401 bool) gin.HandlerFunc {
 		}
 
 		claims := token.Claims.(*CustomClaims)
-		updateUserContext(c, claims.Subject)
+
+		sGarage := services.NewGarageService(daos.NewGarageDAO())
+		garage, err := sGarage.GetByUserId(claims.Subject)
+		if err != nil && err == gorm.ErrRecordNotFound {
+			initializedGarage, errInitGarage := sGarage.Register(claims.Subject)
+			if errInitGarage != nil {
+				c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+				log.Warn(err)
+				return
+			}
+			garage = initializedGarage
+		} else if err != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+			log.Warn(err)
+			return
+		}
+
+		updateUserContext(c, claims.Subject, garage)
 	}
 }
